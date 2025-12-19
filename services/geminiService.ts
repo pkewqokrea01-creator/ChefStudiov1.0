@@ -5,7 +5,7 @@ import { ENV_PRESETS, STUDIO_COLORS, STUDIO_TEXTURES } from "../constants";
 const getGeminiClient = () => {
   const apiKey = process.env.API_KEY;
   if (!apiKey) {
-    throw new Error("API Key não encontrada. Configure a variável 'API_KEY' no Vercel ou selecione uma chave se estiver usando o AI Studio.");
+    throw new Error("API Key ausente. No ambiente de produção (Vercel), você DEVE adicionar a variável de ambiente 'API_KEY' nas configurações do projeto.");
   }
   return new GoogleGenAI({ apiKey });
 };

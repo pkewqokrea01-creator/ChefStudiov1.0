@@ -38,11 +38,22 @@ export const StepGenerate: React.FC<Props> = ({ config, isGenerating, generatedI
   }
 
   if (error) {
+    const isKeyError = error.toLowerCase().includes('api key');
+    
     return (
       <div className="flex flex-col items-center justify-center h-full animate-fade-in space-y-6">
-        <div className="bg-red-900/20 p-6 rounded-2xl border border-red-500/50 max-w-sm text-center">
-          <h3 className="text-red-400 font-bold text-lg mb-2">Problema no Forno</h3>
-          <p className="text-gray-300 mb-4">{error}</p>
+        <div className="bg-red-900/20 p-6 rounded-2xl border border-red-500/50 max-w-lg text-center">
+          <h3 className="text-red-400 font-bold text-lg mb-2">
+            {isKeyError ? 'Configuração Necessária' : 'Problema no Forno'}
+          </h3>
+          <p className="text-gray-300 mb-4 text-sm leading-relaxed">{error}</p>
+          
+          {isKeyError && (
+            <div className="bg-black/30 p-3 rounded-lg text-xs text-left mb-4 font-mono text-gray-400">
+              Dica Vercel: Settings &gt; Environment Variables &gt; Add API_KEY
+            </div>
+          )}
+
           <button 
             onClick={onGenerate}
             className="bg-red-600 text-white px-6 py-2 rounded-full font-bold hover:bg-red-500 transition-colors"
