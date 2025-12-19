@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppState, CameraAngle, ChefConfig, EnvironmentMode, Framing, LightingStyle, PhotoType, ProductType } from './types';
 import { STEP_LABELS } from './constants';
 import { StepUpload } from './components/StepUpload';
@@ -30,6 +30,24 @@ const App: React.FC = () => {
     config: INITIAL_CONFIG,
     error: null
   });
+
+  // Check for API Key availability on mount
+  useEffect(() => {
+    const checkApiKey = async () => {
+      const aistudio = (window as any).aistudio;
+      if (aistudio) {
+        try {
+          const hasKey = await aistudio.hasSelectedApiKey();
+          if (!hasKey) {
+            await aistudio.openSelectKey();
+          }
+        } catch (e) {
+          console.error("AI Studio Key Selection failed", e);
+        }
+      }
+    };
+    checkApiKey();
+  }, []);
 
   const updateConfig = (key: keyof ChefConfig, value: any) => {
     setState(prev => ({
@@ -65,6 +83,15 @@ const App: React.FC = () => {
     setState(prev => ({ ...prev, isGenerating: true, error: null }));
 
     try {
+      // Re-trigger key selection if missing right before generation
+      const aistudio = (window as any).aistudio;
+      if (aistudio) {
+         const hasKey = await aistudio.hasSelectedApiKey();
+         if (!hasKey) {
+            await aistudio.openSelectKey();
+         }
+      }
+
       const resultBase64 = await generateFoodImage(state.processedImage, state.config);
       setState(prev => ({
         ...prev,
