@@ -4,7 +4,7 @@ import { ENV_PRESETS, STUDIO_COLORS, STUDIO_TEXTURES } from "../constants";
 
 const getGeminiClient = () => {
   // Use env var if available, otherwise use the hardcoded key provided by the user
-  const apiKey = process.env.API_KEY || "AIzaSyDX9vu83Qg3A24yV8OHl75uozlxvW0hmcE";
+  const apiKey = process.env.API_KEY || "AIzaSyAdr5Td_M-Elaln3emTK0IZ_qnJsgHwB6A";
   
   if (!apiKey) {
     throw new Error("API Key ausente. No ambiente de produção (Vercel), você DEVE adicionar a variável de ambiente 'API_KEY' nas configurações do projeto.");
