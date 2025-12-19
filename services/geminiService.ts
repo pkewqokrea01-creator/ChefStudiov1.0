@@ -3,11 +3,11 @@ import { ChefConfig, EnvironmentMode, LightingStyle, PhotoType } from "../types"
 import { ENV_PRESETS, STUDIO_COLORS, STUDIO_TEXTURES } from "../constants";
 
 const getGeminiClient = () => {
-  // Use env var if available, otherwise use the hardcoded key provided by the user
-  const apiKey = process.env.API_KEY || "AIzaSyAdr5Td_M-Elaln3emTK0IZ_qnJsgHwB6A";
+  // Configurado para usar a chave específica fornecida
+  const apiKey = process.env.API_KEY || "AIzaSyC-aEef8IMhhZQf6kLruUrcWIZGtZItxvE";
   
   if (!apiKey) {
-    throw new Error("API Key ausente. No ambiente de produção (Vercel), você DEVE adicionar a variável de ambiente 'API_KEY' nas configurações do projeto.");
+    throw new Error("API Key ausente. Configure process.env.API_KEY ou atualize o fallback.");
   }
   return new GoogleGenAI({ apiKey });
 };
