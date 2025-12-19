@@ -120,6 +120,20 @@ const App: React.FC = () => {
     });
   };
 
+  const handleChangeKey = async () => {
+    const aistudio = (window as any).aistudio;
+    if (aistudio) {
+      try {
+        await aistudio.openSelectKey();
+      } catch (e) {
+        console.error("Failed to open key selector", e);
+      }
+    } else {
+      // Fallback message if not in the specific environment
+      console.warn("AI Studio environment not detected.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0f0f0f] text-gray-100 flex flex-col font-sans selection:bg-chef-500 selection:text-black">
       {/* Header */}
@@ -130,8 +144,21 @@ const App: React.FC = () => {
           </div>
           <h1 className="text-xl font-bold tracking-tight">CHEF STUDIO</h1>
         </div>
-        <div className="text-xs font-mono text-gray-500 uppercase">
-          Beta v1.0
+        
+        <div className="flex items-center gap-4">
+          <button
+            onClick={handleChangeKey}
+            className="hidden md:flex items-center gap-2 text-xs font-medium text-gray-400 hover:text-chef-500 transition-colors px-3 py-1.5 border border-gray-700 rounded-lg hover:border-chef-500/50"
+            title="Alterar chave da API"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+            API Key
+          </button>
+          <div className="text-xs font-mono text-gray-500 uppercase">
+            Beta v1.0
+          </div>
         </div>
       </header>
 
